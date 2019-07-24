@@ -1,0 +1,23 @@
+// internal ip address to the container
+
+@hostname = 127.0.0.1
+@port = 3000
+@host = {{hostname}}:{{port}}
+
+@contentType = application/json
+
+@apiname=users
+
+# Get All Users
+GET http://{{host}}/{{apiname}} HTTP/1.1
+
+
+# Add New User
+POST http://{{host}}/{{apiname}}
+Content-Type: {{contentType}}
+
+{
+	"ID": 1,
+	"FirstName": "Bob",
+	"LastName": "Smith",
+}

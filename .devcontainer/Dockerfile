@@ -45,6 +45,7 @@ RUN apt-get update \
         github.com/golangci/golangci-lint/cmd/golangci-lint \
         github.com/mgechev/revive \
         github.com/derekparker/delve/cmd/dlv 2>&1 \
+        github.com/go-delve/delve/cmd/dlv \
     #
     # Clean up
     && apt-get autoremove -y \

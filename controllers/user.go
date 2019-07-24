@@ -13,7 +13,7 @@ type userController struct {
 }
 
 func (uc userController) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/users"{
+	if r.URL.Path == "/users" {
 		switch r.Method {
 		case http.MethodGet:
 			uc.getAll(w,r)
@@ -55,7 +55,7 @@ func newUserController() *userController  {
 }
 
 func (uc *userController) getAll(w http.ResponseWriter, r *http.Request){
-	encodeResponseAsJSON(models.GetUsers())
+	encodeResponseAsJSON(models.GetUsers(), w)
 }
 
 func (uc *userController) get(id int, w http.ResponseWriter){
@@ -67,37 +67,36 @@ func (uc *userController) get(id int, w http.ResponseWriter){
 	encodeResponseAsJSON(u,w)
 }
 
-func (uc *userController) post(w http.ResponseWriter, r *http.Request){
+func (uc *userController) post(w http.ResponseWriter, r *http.Request) {
 	u, err := uc.parseRequest(r)
-	if err != nil{
+	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Could not parse User object."))
+		w.Write([]byte("Could not parse User object"))
 		return
 	}
-	u, err := models.AddUser(u)
-	if err != nil{
+	u, err = models.AddUser(u)
+	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte{err.Error()))
+		w.Write([]byte(err.Error()))
 		return
 	}
-
-	encodeResponseAsJSON(u,w)
+	encodeResponseAsJSON(u, w)
 }
 
 func (uc *userController) put(id int, w http.ResponseWriter, r *http.Request){
 	u, err := uc.parseRequest(r)
-	if (err != nil){
+	if (err != nil) {
 		w.WriteHeader(http.StatusInternalServerError)
-		w.Writer([]byte("Could not parse User object"))
+		w.Write([]byte("Could not parse User object"))
 		return 
 	}
 	if id != u.ID {
-		w.WriterHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("ID of submitted user must match ID in URL"))
 		return
 	}
 	u, err = models.UpdateUser(u)
-	if err != nill{
+	if err != nil{
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
 		return
@@ -106,7 +105,6 @@ func (uc *userController) put(id int, w http.ResponseWriter, r *http.Request){
 }
 
 func (uc *userController) delete(id int, w http.ResponseWriter){
-	err :=models.RemoveUserById(id)
 	err := models.RemoveUserById(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

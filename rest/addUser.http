@@ -8,6 +8,13 @@
 
 @apiname=users
 
-# Get All Users
-GET http://{{host}}/{{apiname}} HTTP/1.1
+# Add New User
+POST http://{{host}}/{{apiname}}
+Host: {{host}}
+Content-Type: {{contentType}}
 
+{
+	"ID": 0,
+	"FirstName": "Bob",
+	"LastName": "Smith"
+}
